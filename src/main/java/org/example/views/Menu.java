@@ -1,11 +1,13 @@
 package org.example.views;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import org.example.App;
@@ -19,27 +21,31 @@ public class Menu {
 
     public Menu(){
         initialize();
+        bg_style();
     }
 
     private void initialize(){
         root = new VBox();
-        root.setAlignment(Pos.CENTER);
+        root.setAlignment(Pos.TOP_CENTER);
         root.setSpacing(20);
-        root.setPrefWidth(400);
-        root.setPrefHeight(400);
+        root.setPrefWidth(600);
+        root.setPrefHeight(700);
 
         Label heading = new Label("Welcome to Ward Board");
-        heading.setFont(Font.font("Arial",24));
+        heading.setTextFill(Color.web("#96F062"));
+        heading.setFont(Font.font("Arial",28));
 
         Button load = new Button("Load Project");
+        btnStyle(load);
         Button start = new Button("Start Project");
+        btnStyle(start);
 
-        load.setFont(Font.font("Arial",14));
-        start.setFont(Font.font("Arial",14));
+        load.setFont(Font.font("Arial",16));
+        start.setFont(Font.font("Arial",16));
 
         TextField project_input = new TextField();
         project_input.setFont(Font.font("Arial",14));
-        project_input.setPromptText("project input");
+        project_input.setPromptText("project name");
 
         load.setOnAction(e->{
             // load the file here.
@@ -74,6 +80,23 @@ public class Menu {
     public void loadHome(){
         Main main = new Main();
         App.scene.setRoot(main.getContent());
+        main.autoUpdate();
+    }
+
+    private void btnStyle(Node node){
+        node.setStyle(
+                "-fx-background-color: #96F062;"+
+                        "-fx-text-fill: #2157BD;"+
+                        "-fx-border-radius: 20"
+        );
+    }
+
+    private void bg_style(){
+        Image img = new Image(this.getClass().getResource("bg.png").toString());
+        BackgroundImage myBI= new BackgroundImage(img,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        root.setBackground(new Background(myBI));
     }
 
     public VBox getRoot() {

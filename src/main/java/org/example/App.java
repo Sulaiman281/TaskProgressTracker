@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.example.models.Project;
-import org.example.views.Main;
 import org.example.views.Menu;
 
 

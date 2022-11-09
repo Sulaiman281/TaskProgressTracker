@@ -36,6 +36,20 @@ public class Task {
             creator = creator.replace("!", "");
             est_efforts = est_efforts.replace("!", "");
             est_duration = est_duration.replace("!", "");
+
+            name = name.replace("(", "");
+            description = description.replace("(", "");
+            creator = creator.replace("(", "");
+            est_efforts = est_efforts.replace("(", "");
+            est_duration = est_duration.replace("(", "");
+
+            name = name.replace(")", "");
+            description = description.replace(")", "");
+            creator = creator.replace(")", "");
+            est_efforts = est_efforts.replace(")", "");
+            est_duration = est_duration.replace(")", "");
+
+
         } catch (Exception ignored) {
 
         }

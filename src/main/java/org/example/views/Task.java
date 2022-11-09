@@ -1,6 +1,7 @@
 package org.example.views;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -82,7 +83,7 @@ public class Task {
                 break;
             default:
                 box.setStyle(
-                        "-fx-background-color: WHITE"
+                        "-fx-background-color: BLACk"
                 );
                 created_dateTime.setTextFill(Color.BLACK);
                 modified_dateTime.setTextFill(Color.BLACK);
@@ -91,40 +92,54 @@ public class Task {
 
     private void initialize(){
         box = new VBox();
+        box.setAlignment(Pos.CENTER);
         box.setSpacing(20);
+
+        type = new ChoiceBox<>();
+        type.getItems().addAll("Spike","Story","Epic","Bug");
+        type.valueProperty().addListener((observableValue, s, t1) -> {
+            changeColor();
+        });
+
+        type.setStyle(
+                "-fx-background-color: #96F062;"+
+                        "-fx-border-radius: 20"
+        );
+        box.getChildren().add(type);
 
         name = new TextField();
         name.setPromptText("title");
         name.setFont(Font.font("Arial",14));
-
-        description = new TextArea();
-        description.setWrapText(true);
-        description.setFont(Font.font("Arial",12));
-        description.setPromptText("description here.");
+        box.getChildren().add(getBox(getLabel("Title:"),name));
 
         points = new TextField();
         points.setFont(Font.font("Arial",14));
         new NumFieldFX().numField(points);
         points.setPromptText("Points");
-
-        type = new ChoiceBox<>();
-        type.getItems().addAll("Spike","Story","Epic","Bug");
-
-        type.valueProperty().addListener((observableValue, s, t1) -> {
-            changeColor();
-        });
+        box.getChildren().add(getBox(getLabel("Points:"),points));
 
         creator = new TextField();
         creator.setFont(Font.font("Arial",14));
         creator.setPromptText("creator");
+        box.getChildren().add(getBox(getLabel("Creator:"),creator));
+
+        description = new TextArea();
+        description.setWrapText(true);
+        description.setFont(Font.font("Arial",12));
+        description.setPromptText("description here.");
+        box.getChildren().add(getBox(getLabel("Description:"),description));
+
 
         est_effort = new TextField();
         est_effort.setFont(Font.font("Arial",14));
         est_effort.setPromptText("Estimate Efforts");
+        box.getChildren().add(getBox(getLabel("Est Efforts:"),est_effort));
+
 
         est_duration = new TextField();
         est_duration.setFont(Font.font("Arial",14));
         est_duration.setPromptText("Estimate Duration");
+        box.getChildren().add(getBox(getLabel("Est Duration:"),est_duration));
 
         save = new Button("Save");
         cancel = new Button("Cancel");
@@ -153,20 +168,39 @@ public class Task {
             stage.close();
         });
 
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER_RIGHT);
-        hBox.getChildren().addAll(save,cancel);
+        save.setStyle(
+                "-fx-background-color: #96F062;"+
+                        "-fx-text-fill: #2157BD;"+
+                        "-fx-border-radius: 20"
+        );
+        cancel.setStyle(
+                "-fx-background-color: #96F062;"+
+                        "-fx-text-fill: #2157BD;"+
+                        "-fx-border-radius: 20"
+        );
+
+        box.getChildren().add(getBox(save,cancel));
 
         created_dateTime = new Label();
         created_dateTime.setFont(Font.font("Arial",18));
         modified_dateTime = new Label();
         modified_dateTime.setFont(Font.font("Arial",18));
-        HBox head = new HBox();
-        head.setAlignment(Pos.CENTER_LEFT);
-        head.setSpacing(40);
-        head.getChildren().addAll(created_dateTime,modified_dateTime);
-        box.getChildren().addAll(head,name,type,points,creator,description,est_effort,est_duration,hBox);
+        box.getChildren().addAll(created_dateTime,modified_dateTime);
+    }
+
+    Label getLabel(String text){
+        Label label = new Label(text);
+        label.setFont(Font.font("Arial",18));
+        label.setTextFill(Color.WHITE);
+        return label;
+    }
+
+    HBox getBox(Node... node){
+        HBox hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER);
+        hbox.setSpacing(40);
+        hbox.getChildren().addAll(node);
+        return hbox;
     }
 
 }
